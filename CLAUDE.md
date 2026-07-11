@@ -2,49 +2,52 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project state
+## What This App Is
 
-This is a **fresh Laravel 13 skeleton** (project name: QuestMastxrs). Aside from framework scaffolding it currently contains no custom domain code — `routes/web.php` serves only the `welcome` view, and `app/` holds just the default `User` model, base `Controller`, and `AppServiceProvider`. Expect to be building features from the ground up rather than fitting into an existing architecture.
+Questmastxrs — a site for free, public, real-world treasure hunts. Hosts hide laminated clue cards around a city (parks, neighborhoods); each clue leads to the next and ships with 3 progressively-revealing hints. Guests ("questers") browse a hunt's clues at their own pace (no accounts, just a nickname), leave tips for each other on a per-clue message board, and post celebratory photos to a hunt's gallery once they finish. Hosts manage everything from a Filament admin panel at `/admin`. Vibe: friendly, neighborly, adventurous, cryptic, home-grown, a bit snarky.
 
-## Stack
-
-- **PHP ^8.3**, **Laravel Framework ^13.8**
-- **SQLite** by default — the DB is a single file at `database/database.sqlite` (already present; migrations run against it)
-- **Vite ^8** + **Tailwind CSS v4** (via `@tailwindcss/vite`) for the frontend; entry points `resources/css/app.css` and `resources/js/app.js`
-- **Laravel Herd** is the local dev environment (repo lives under `~/Herd/`), so the app is typically served at `http://questmastxrs.test` without running `artisan serve`
+Production domain: www.questmastxers.com (Porkbun). Local dev: `http://questmastxrs.test` via Laravel Herd.
 
 ## Commands
 
 ```bash
-composer dev      # runs server + queue listener + pail logs + vite concurrently (main dev loop)
 composer setup    # first-time bootstrap: install, key gen, migrate, npm install, build
-composer test     # clears config cache, then runs the full PHPUnit suite
-./vendor/bin/pint # format code (Laravel Pint — the linter/formatter for this project)
-npm run build     # production asset build
+composer dev       # server + queue listener + pail logs + vite, concurrently
+composer test      # clears config cache, then runs the full PHPUnit suite
+php artisan test --filter=TestClassName   # run a single test
+./vendor/bin/pint  # format code
+npm run build      # production asset build
 ```
 
-Run a single test:
+Don't use `php artisan serve` for anything that involves file uploads (photo posting) — PHP's built-in dev server has a known bug on Windows that breaks multipart uploads. Use the Herd-served `questmastxrs.test` instead.
 
-```bash
-php artisan test --filter=ExampleTest          # by class/method name
-php artisan test tests/Feature/ExampleTest.php # by file
-```
+## Architecture
 
-Other useful:
+**Stack:** Laravel 13 / PHP 8.4, Filament 5, Tailwind CSS 4, Vite 8, Alpine.js, SQLite (file-backed in dev, in-memory for tests). Mail via Postmark (`log` driver locally).
 
-```bash
-php artisan migrate            # apply migrations
-php artisan pail               # tail application logs
-php artisan tinker             # REPL
-```
+### Domain model
 
-## Testing
+- **`Hunt`** — `title`, `slug` (route key), `tagline`, `description`, `city`, `neighborhood`, `cover_image`, `status` (draft/active/archived), `starting_hint`, `published_at`. `hasMany` `Clue` (ordered) and `Photo`.
+- **`Clue`** — belongs to `Hunt`, has `order`, `riddle_text`, `location_note` (general, non-spoiler area). `hasMany` `Hint` (ordered) and `Message`.
+- **`Hint`** — belongs to `Clue`, fixed at exactly 3 per clue (`order` 1–3), managed in the admin as a Filament Repeater rather than a standalone resource.
+- **`Message`** — a per-clue message board post (nickname + body). `hidden_at`/`hidden_by` support reversible host takedown; the `visible()` scope filters these out publicly.
+- **`Photo`** — a per-hunt celebratory photo (nickname + caption + storage path), same `hidden_at`/`hidden_by`/`visible()` takedown pattern as `Message`.
 
-- PHPUnit (config in `phpunit.xml`), split into `tests/Unit` and `tests/Feature`, base class `tests/TestCase.php`.
-- The test environment (see `phpunit.xml`) forces `APP_ENV=testing`, an **in-memory SQLite** database (`DB_DATABASE=:memory:`), and array drivers for cache/mail/queue/session — tests never touch `database/database.sqlite`.
+### Public flow (`routes/web.php`)
 
-## Conventions specific to this repo
+- `HomeController@index` — lists active hunts.
+- `HuntController@show` — the hunt page: intro, all clues open (self-paced, no gating), each clue's 3 hints click-to-reveal via Alpine, each clue's message board, and a photo gallery/upload form at the bottom.
+- `MessageController@store` / `PhotoController@store` — validate and persist quester submissions, remember the nickname in a cookie, and notify hosts via `NewSubmissionNotification`.
 
-- **Formatting is Pint, not PHP-CS-Fixer directly** — always run `./vendor/bin/pint` before considering a change done.
-- **App bootstrapping lives in `bootstrap/app.php`**, not in HTTP kernel / route-service-provider files (Laravel 11+ style). Register middleware, exception handling, and routing there. Note: JSON error rendering is already enabled for `api/*` request paths.
-- There is **no `routes/api.php` yet** — add API routing via `->withRouting(api: ...)` in `bootstrap/app.php` if/when an API surface is needed.
+### Admin panel (`/admin`, Filament)
+
+- `HuntResource` — CRUD on hunts, with a `CluesRelationManager` (clues + a 3-item hints Repeater) nested inside.
+- `MessageResource` / `PhotoResource` — moderation queues with hide/unhide row actions (soft takedown, not hard delete).
+
+### Permissions & Auth
+
+Spatie `laravel-permission` gates `/admin` to the `host` role (`User::canAccessPanel()`). Hosts are seeded by `AdminSeeder` (Cliff, Alex, Evaline); `HuntSeeder` adds one example hunt ("The Riverbend Ramble") for local testing — run it manually via `php artisan db:seed --class=HuntSeeder`, it's not wired into `DatabaseSeeder` by default.
+
+### Notifications
+
+`NewSubmissionNotification` mails every `host`-role user whenever a `Message` or `Photo` is created, dispatched directly from the storing controller (no queue/job indirection).

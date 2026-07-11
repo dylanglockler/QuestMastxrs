@@ -4,6 +4,54 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Karla', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Special Elite', 'Courier New', ui-monospace, monospace;
+
+    --color-parchment-50: #fdfaf1;
+    --color-parchment-100: #f8efd7;
+    --color-parchment-200: #efdfae;
+    --color-parchment-300: #e2c87c;
+    --color-parchment-400: #d3ac53;
+
+    --color-ink-700: #3a3226;
+    --color-ink-800: #2a2419;
+    --color-ink-900: #1c170f;
+
+    --color-forest-600: #3f5e42;
+    --color-forest-700: #324c34;
+    --color-forest-800: #263a27;
+
+    --color-rust-500: #c1622f;
+    --color-rust-600: #a54f24;
+    --color-rust-700: #833d1b;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+body {
+    background-color: var(--color-parchment-100);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(58, 50, 38, 0.08) 1px, transparent 0);
+    background-size: 22px 22px;
+}
+
+.paper-card {
+    background-color: var(--color-parchment-50);
+    border: 1px solid rgba(58, 50, 38, 0.15);
+    box-shadow: 0 1px 0 rgba(58, 50, 38, 0.05), 0 8px 20px -12px rgba(28, 23, 15, 0.35);
+}
+
+.torn-edge::before {
+    content: '';
+    display: block;
+    height: 6px;
+    margin: 0 -1px 0.75rem -1px;
+    background-image: linear-gradient(135deg, var(--color-parchment-100) 25%, transparent 25%),
+        linear-gradient(225deg, var(--color-parchment-100) 25%, transparent 25%);
+    background-position: 0 0;
+    background-size: 12px 12px;
+    background-repeat: repeat-x;
 }
