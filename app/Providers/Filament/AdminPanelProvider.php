@@ -10,6 +10,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -32,6 +33,27 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            // Browsers/password managers autofill fields by setting `.value` without
+            // firing an `input` event, so Livewire's deferred `wire:model` never captures
+            // the value and submits an empty email/password. This detects the CSS
+            // `:-webkit-autofill` state via an animation and re-dispatches `input` so
+            // Livewire syncs the autofilled value.
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): string => <<<'HTML'
+                    <style>
+                        input:-webkit-autofill { animation-name: fi-on-autofill; }
+                        @keyframes fi-on-autofill { from {} to {} }
+                    </style>
+                    <script>
+                        document.addEventListener('animationstart', (e) => {
+                            if (e.animationName === 'fi-on-autofill') {
+                                e.target.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                    </script>
+                    HTML,
+            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
