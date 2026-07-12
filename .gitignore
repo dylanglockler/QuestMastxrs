@@ -15,7 +15,8 @@
 /.zed
 /auth.json
 /node_modules
-/public/build
+# /public/build is intentionally committed: the production server (Node 18) can't
+# run Vite 8 / Tailwind 4, so assets are built locally and deployed via git.
 /public/fonts-manifest.dev.json
 /public/hot
 /public/storage
