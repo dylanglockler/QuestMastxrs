@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Questmastxrs — a site for free, public, real-world treasure hunts. Hosts hide laminated clue cards around a city (parks, neighborhoods); each clue leads to the next and ships with 3 progressively-revealing hints. Guests ("questers") browse a hunt's clues at their own pace (no accounts, just a nickname), leave tips for each other on a per-clue message board, and post celebratory photos to a hunt's gallery once they finish. Hosts manage everything from a Filament admin panel at `/admin`. Vibe: friendly, neighborly, adventurous, cryptic, home-grown, a bit snarky.
 
-Production domain: www.questmastxers.com (Porkbun). Local dev: `http://questmastxrs.test` via Laravel Herd.
+Production domain: www.questmastxrs.com (registered at Porkbun, hosted on Cloudways). Local dev: `http://questmastxrs.test` via Laravel Herd.
 
 ## Commands
 
