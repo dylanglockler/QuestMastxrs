@@ -1,0 +1,101 @@
+{
+  "_fonts-Cp7FTuST.css": {
+    "file": "assets/fonts-Cp7FTuST.css",
+    "src": "_fonts-Cp7FTuST.css"
+  },
+  "_karla-400-normal-CMxStcnq.woff": {
+    "file": "assets/karla-400-normal-CMxStcnq.woff",
+    "src": "_karla-400-normal-CMxStcnq.woff"
+  },
+  "_karla-400-normal-C_jajTY_.woff2": {
+    "file": "assets/karla-400-normal-C_jajTY_.woff2",
+    "src": "_karla-400-normal-C_jajTY_.woff2"
+  },
+  "_karla-400-normal-DQe2ZdED.woff2": {
+    "file": "assets/karla-400-normal-DQe2ZdED.woff2",
+    "src": "_karla-400-normal-DQe2ZdED.woff2"
+  },
+  "_karla-400-normal-iWRxgclR.woff": {
+    "file": "assets/karla-400-normal-iWRxgclR.woff",
+    "src": "_karla-400-normal-iWRxgclR.woff"
+  },
+  "_karla-500-normal-6wzn_4WC.woff2": {
+    "file": "assets/karla-500-normal-6wzn_4WC.woff2",
+    "src": "_karla-500-normal-6wzn_4WC.woff2"
+  },
+  "_karla-500-normal-BQGx_UZ6.woff2": {
+    "file": "assets/karla-500-normal-BQGx_UZ6.woff2",
+    "src": "_karla-500-normal-BQGx_UZ6.woff2"
+  },
+  "_karla-500-normal-BR9CgtUN.woff": {
+    "file": "assets/karla-500-normal-BR9CgtUN.woff",
+    "src": "_karla-500-normal-BR9CgtUN.woff"
+  },
+  "_karla-500-normal-BWjg-GL4.woff": {
+    "file": "assets/karla-500-normal-BWjg-GL4.woff",
+    "src": "_karla-500-normal-BWjg-GL4.woff"
+  },
+  "_karla-600-normal-BAoyHYuk.woff": {
+    "file": "assets/karla-600-normal-BAoyHYuk.woff",
+    "src": "_karla-600-normal-BAoyHYuk.woff"
+  },
+  "_karla-600-normal-BH_u9dis.woff2": {
+    "file": "assets/karla-600-normal-BH_u9dis.woff2",
+    "src": "_karla-600-normal-BH_u9dis.woff2"
+  },
+  "_karla-600-normal-CIPY_Mp5.woff2": {
+    "file": "assets/karla-600-normal-CIPY_Mp5.woff2",
+    "src": "_karla-600-normal-CIPY_Mp5.woff2"
+  },
+  "_karla-600-normal-Cf-uwXr_.woff": {
+    "file": "assets/karla-600-normal-Cf-uwXr_.woff",
+    "src": "_karla-600-normal-Cf-uwXr_.woff"
+  },
+  "_karla-700-normal-CospC10L.woff": {
+    "file": "assets/karla-700-normal-CospC10L.woff",
+    "src": "_karla-700-normal-CospC10L.woff"
+  },
+  "_karla-700-normal-DFuMffT3.woff2": {
+    "file": "assets/karla-700-normal-DFuMffT3.woff2",
+    "src": "_karla-700-normal-DFuMffT3.woff2"
+  },
+  "_karla-700-normal-DnPH2EDB.woff2": {
+    "file": "assets/karla-700-normal-DnPH2EDB.woff2",
+    "src": "_karla-700-normal-DnPH2EDB.woff2"
+  },
+  "_karla-700-normal-eTNnM7bB.woff": {
+    "file": "assets/karla-700-normal-eTNnM7bB.woff",
+    "src": "_karla-700-normal-eTNnM7bB.woff"
+  },
+  "_special-elite-400-normal-BtSRmyJ6.woff": {
+    "file": "assets/special-elite-400-normal-BtSRmyJ6.woff",
+    "src": "_special-elite-400-normal-BtSRmyJ6.woff"
+  },
+  "_special-elite-400-normal-CaJZjSVf.woff": {
+    "file": "assets/special-elite-400-normal-CaJZjSVf.woff",
+    "src": "_special-elite-400-normal-CaJZjSVf.woff"
+  },
+  "_special-elite-400-normal-ChcxYnmu.woff2": {
+    "file": "assets/special-elite-400-normal-ChcxYnmu.woff2",
+    "src": "_special-elite-400-normal-ChcxYnmu.woff2"
+  },
+  "_special-elite-400-normal-YjDd9tmf.woff2": {
+    "file": "assets/special-elite-400-normal-YjDd9tmf.woff2",
+    "src": "_special-elite-400-normal-YjDd9tmf.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-CrWwh-Zv.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-B9qO1Jfl.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
